@@ -266,7 +266,3 @@ lucidlaw-triage/
 
 Python · FastAPI · Pydantic v2 · Anthropic Claude (`claude-sonnet-4-6`) · Next.js ·
 TypeScript · Ruff · pytest · Docker.
-
----
-
-_Built for the LucidLaw technical co-founder assessment._
