@@ -1,0 +1,59 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# demo1 — LucidLaw triage prototype, production stack for the VPS.
+#
+# Isolated stack: its own `internal` network (becomes `demo1_internal`). No host
+# ports are published — the shared edge proxy (/opt/edge, container "edge-nginx")
+# attaches to this network and routes by hostname:
+#   demo1.eseeds.lk      -> demo1-web:3000
+#   demo1-api.eseeds.lk  -> demo1-backend:8000
+# Secrets come from /opt/demo1/.env (ANTHROPIC_API_KEY, MODEL, CORS_ORIGINS).
+# ──────────────────────────────────────────────────────────────────────────────
+name: demo1
+
+services:
+  demo1-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: demo1-backend
+    container_name: demo1-backend
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - internal
+    healthcheck:
+      test:
+        ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  demo1-web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: https://demo1-api.eseeds.lk
+    image: demo1-web
+    container_name: demo1-web
+    restart: unless-stopped
+    depends_on:
+      demo1-backend:
+        condition: service_healthy
+    networks:
+      - internal
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+networks:
+  internal:
+    driver: bridge
