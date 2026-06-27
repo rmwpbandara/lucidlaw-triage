@@ -23,7 +23,7 @@ A two-part system that mirrors LucidLaw's real platform direction:
   **forced tool use** so the response is structured by construction.
 
 I treated the prototype as a small system built to a production standard, rather than a
-throwaway script — clean module boundaries, typed contracts, tests, linting, CI, and
+throwaway script — clean module boundaries, typed contracts, tests, linting, and
 Docker — so it reads as the seed of the larger architecture it would grow into.
 
 ## Key technical decisions
@@ -165,7 +165,7 @@ nearest fit — but the honesty matters more than a confident guess.
 - Reliable, validated JSON for any plain-language input.
 - Clean, warm, resolution-first language with no legal jargon — enforced in code.
 - Graceful, honest handling of the ambiguous case.
-- Production-shaped foundation: tests, linting, CI, Docker, clear module boundaries.
+- Production-shaped foundation: tests, linting, Docker, clear module boundaries.
 
 ## What it doesn't do yet (known limits)
 
@@ -259,14 +259,13 @@ lucidlaw-triage/
 ├── frontend/                 Next.js consumer UI
 ├── ARCHITECTURE.md           design decisions and trade-offs
 ├── docker-compose.yml        local two-service dev stack
-├── docker-compose.prod.yml   production stack (private network, build args)
-└── .github/workflows/ci.yml  lint + test on every push
+└── docker-compose.prod.yml   production stack (private network, build args)
 ```
 
 ## Tech stack
 
 Python · FastAPI · Pydantic v2 · Anthropic Claude (`claude-sonnet-4-6`) · Next.js ·
-TypeScript · Ruff · pytest · Docker · GitHub Actions.
+TypeScript · Ruff · pytest · Docker.
 
 ---
 
