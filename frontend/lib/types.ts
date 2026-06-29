@@ -16,7 +16,7 @@ export interface TriageResult {
 
 /** Friendly, non-technical labels for each category code. */
 export const CATEGORY_LABELS: Record<string, string> = {
-  tenancy_and_housing: "Renting & housing",
+  tenancy_and_housing: "Tenancy & housing",
   employment: "Work & employment",
   consumer_rights: "Shopping & consumer rights",
   family_law: "Family & relationships",
