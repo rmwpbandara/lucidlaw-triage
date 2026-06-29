@@ -73,6 +73,7 @@ crashing.
 | Condition | Behaviour |
 |---|---|
 | Missing API key | App boots; `/api/triage` returns `503` with a clear message. |
+| Anthropic account out of credit | Caught and surfaced as `503` with a clear "out of credit" message. |
 | Upstream model/API error | Caught, logged, surfaced as `502` with a friendly message — never a stack trace. |
 | Model returns no tool call | Raised as an engine error → `502`. |
 | Invalid input (empty/oversized) | Rejected by Pydantic with `422` before any model call. |
